@@ -14,14 +14,14 @@ function App() {
 
   useEffect(() => {
     axios.get("http://demo1030918.mockable.io/").then((response) => {
-      let array = [];
+      let data = [];
       for (let key in response.data) {
-        array.push({
+        data.push({
           mode: key.slice(0, key.indexOf("Mode")) + " mode",
           fields: response.data[key]["field"],
         });
       }
-      setGameModes([...gameModes, ...array]);
+      setGameModes([...data]);
     });
   }, []);
 

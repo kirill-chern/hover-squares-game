@@ -1,23 +1,66 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import GamePanel from "./components/GamePanel/GamePanel";
+import SelectPanel from "./components/SelectPanel/SelectPanel";
 
 function App() {
+  let [gameModes, setGameModes] = useState([]);
+  let [selectedGameMode, setSelectedGameMode] = useState(null);
+  let [startedGameMode, setStartedGameMode] = useState({
+    mode: "",
+    fields: null,
+  });
+
+  useEffect(() => {
+    axios.get("http://demo1030918.mockable.io/").then((response) => {
+      let array = [];
+      for (let key in response.data) {
+        array.push({
+          mode: key.slice(0, key.indexOf("Mode")) + " mode",
+          fields: response.data[key]["field"],
+        });
+      }
+      setGameModes([...gameModes, ...array]);
+    });
+  }, []);
+
+  useEffect(() => {
+    let blueDataCells = document.querySelectorAll(
+      ".app-wrapper-body-game-panel__data-cell_active"
+    );
+    blueDataCells.forEach(cell => {
+      cell.classList.remove("app-wrapper-body-game-panel__data-cell_active");
+    });
+  }, [startedGameMode]);
+
+  const handleChange = e => {
+    setSelectedGameMode(
+      gameModes.find((gameMode) => gameMode.mode === e.value)
+    );
+  };
+
+  const handleClick = () => {
+    if (selectedGameMode) {
+      setStartedGameMode(
+        gameModes.find((gameMode) => gameMode.mode === selectedGameMode.mode)
+      );
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="app-wrapper">
+        <header className="app-wrapper-header">Hover squares game</header>
+        <div className="app-wrapper-body">
+          <SelectPanel
+            gameModes={gameModes}
+            handleChange={handleChange}
+            handleClick={handleClick}
+          />
+          <GamePanel size={startedGameMode.fields} />
+        </div>
+      </div>
     </div>
   );
 }

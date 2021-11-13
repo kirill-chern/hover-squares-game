@@ -1,6 +1,6 @@
 import Select from "react-select";
 
-let SelectPanel = ({ gameModes, handleChange, handleClick }) => {
+const SelectPanel = ({ gameModes, handleChange, handleClick }) => {
   return (
     <div className="app-wrapper-body-select">
       <Select

@@ -1,6 +1,6 @@
 import GameDataCell from "./GameDataCell";
 
-let GameRow = ({ size, toggleDataCellColor }) => {
+const GameRow = ({ size, toggleDataCellColor }) => {
   let cells;
 
   if (size > 0) {

@@ -1,4 +1,4 @@
-let GameDataCell = ({ toggleDataCellColor }) => {
+const GameDataCell = ({ toggleDataCellColor }) => {
   return (
     <div
       className="app-wrapper-body-game-panel__data-cell"

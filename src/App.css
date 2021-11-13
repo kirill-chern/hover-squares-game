@@ -38,9 +38,6 @@
   cursor: pointer;
 }
 
-.app-wrapper-body-game-panel {
-}
-
 .app-wrapper-body-game-panel__row {
   display: flex;
   justify-content: center;
